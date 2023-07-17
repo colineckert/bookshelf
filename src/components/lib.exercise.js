@@ -13,36 +13,59 @@ const FormGroup = styled.div({
   flexDirection: 'column',
 })
 
-const Button = styled.button(props => {
-  let variantStyles
-  switch (props.variant) {
-    case 'primary':
-      variantStyles = {
-        background: '#3f51b5',
-        color: 'white',
-      }
-      break
-    case 'secondary':
-      variantStyles = {
-        background: '#f1f2f7',
-        color: '#434449',
-      }
-      break
-    default:
-      variantStyles = {
-        background: '#3f51b5',
-        color: 'white',
-      }
-      break
-  }
-  return {
+// OG Button solution;
+// const Button = styled.button(props => {
+//   let variantStyles
+//   switch (props.variant) {
+//     case 'primary':
+//       variantStyles = {
+//         background: '#3f51b5',
+//         color: 'white',
+//       }
+//       break
+//     case 'secondary':
+//       variantStyles = {
+//         background: '#f1f2f7',
+//         color: '#434449',
+//       }
+//       break
+//     default:
+//       variantStyles = {
+//         background: '#3f51b5',
+//         color: 'white',
+//       }
+//       break
+//   }
+//   return {
+//     padding: '10px 15px',
+//     border: '0',
+//     lineHeight: '1',
+//     borderRadius: '3px',
+//     ...variantStyles,
+//   }
+// })
+
+// Better Button solution:
+const buttonVariants = {
+  primary: {
+    background: '#3f51b5',
+    color: 'white',
+  },
+  secondary: {
+    background: '#f1f2f7',
+    color: '#434449',
+  },
+}
+
+const Button = styled.button(
+  {
     padding: '10px 15px',
     border: '0',
     lineHeight: '1',
     borderRadius: '3px',
-    ...variantStyles,
-  }
-})
+  },
+  ({variant = 'primary'}) => buttonVariants[variant],
+)
 
 const CircleButton = styled.button({
   borderRadius: '30px',
