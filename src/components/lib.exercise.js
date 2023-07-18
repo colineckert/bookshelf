@@ -1,5 +1,7 @@
 import styled from '@emotion/styled/macro'
 import {Dialog as ReachDialog} from '@reach/dialog'
+import {FaSpinner} from 'react-icons/fa'
+import {keyframes} from '@emotion/core'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 
@@ -15,39 +17,6 @@ const FormGroup = styled.div({
   flexDirection: 'column',
 })
 
-// OG Button solution;
-// const Button = styled.button(props => {
-//   let variantStyles
-//   switch (props.variant) {
-//     case 'primary':
-//       variantStyles = {
-//         background: '#3f51b5',
-//         color: 'white',
-//       }
-//       break
-//     case 'secondary':
-//       variantStyles = {
-//         background: '#f1f2f7',
-//         color: '#434449',
-//       }
-//       break
-//     default:
-//       variantStyles = {
-//         background: '#3f51b5',
-//         color: 'white',
-//       }
-//       break
-//   }
-//   return {
-//     padding: '10px 15px',
-//     border: '0',
-//     lineHeight: '1',
-//     borderRadius: '3px',
-//     ...variantStyles,
-//   }
-// })
-
-// Better Button solution:
 const buttonVariants = {
   primary: {
     background: colors.indigo,
@@ -58,7 +27,6 @@ const buttonVariants = {
     color: colors.text,
   },
 }
-
 const Button = styled.button(
   {
     padding: '10px 15px',
@@ -96,4 +64,15 @@ const Dialog = styled(ReachDialog)({
   },
 })
 
-export {CircleButton, Dialog, Button, Input, FormGroup}
+const spin = keyframes({
+  '0%': {transform: 'rotate(0deg)'},
+  '100%': {transform: 'rotate(360deg)'},
+})
+const Spinner = styled(FaSpinner)({
+  animation: `${spin} 1s linear infinite`,
+})
+Spinner.defaultProps = {
+  'aria-label': 'loading',
+}
+
+export {CircleButton, Dialog, Button, Input, FormGroup, Spinner}
