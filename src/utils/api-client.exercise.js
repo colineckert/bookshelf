@@ -11,7 +11,7 @@ async function client(endpoint, customConfig = {}) {
     if (response.ok) {
       return data
     } else {
-      Promise.reject(data)
+      return Promise.reject(data)
     }
   })
 }
