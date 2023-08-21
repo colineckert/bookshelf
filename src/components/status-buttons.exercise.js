@@ -72,7 +72,7 @@ function StatusButtons({user, book}) {
   //   and the updates as data. The mutate function will be called with the updates
   //   you can pass as data.
   const [update] = useMutation(
-    (updates) => {
+    updates => {
       client(`list-items/${updates.id}`, {
         data: updates,
         token: user.token,
