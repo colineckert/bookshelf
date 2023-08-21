@@ -40,12 +40,12 @@ We can drastically simplify our UI state management if we split out the server
 cache into something separate.
 
 A fantastic solution for managing the server cache on the client is
-[`react-query`](https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/overview.md). It is a set of React
-hooks that allow you to query, cache, and mutate data on your server in a way
-that's flexible to support many use cases and optimizations but opinionated
-enough to provide a huge amount of value. And thanks to the power of hooks, we
-can build our own hooks on top of those provided to keep our component code
-really simple.
+[`react-query`](https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/overview.md).
+It is a set of React hooks that allow you to query, cache, and mutate data on
+your server in a way that's flexible to support many use cases and optimizations
+but opinionated enough to provide a huge amount of value. And thanks to the
+power of hooks, we can build our own hooks on top of those provided to keep our
+component code really simple.
 
 Here are a few examples of how you can use react-query that are relevant for our
 exercise:
@@ -74,8 +74,10 @@ function App({tweetId}) {
 
 📜 here are the docs:
 
-- `useQuery`: https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/api.md#usequery
-- `useMutation`: https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/api.md#usemutation
+- `useQuery`:
+  https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/api.md#usequery
+- `useMutation`:
+  https://github.com/TanStack/query/blob/2.x/docs/src/pages/docs/api.md#usemutation
 
 That should be enough to get you going.
 
