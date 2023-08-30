@@ -2,27 +2,15 @@
 import {jsx} from '@emotion/core'
 
 import {Link} from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { client } from 'utils/api-client.exercise'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import {StatusButtons} from './status-buttons'
 import {Rating} from './rating'
+import {useListItem} from 'utils/list-items.exercise'
 
 function BookRow({user, book}) {
   const {title, author, coverImageUrl} = book
-
-  // 🐨 call useQuery here to get the list item
-  // queryKey should be 'list-items'
-  // queryFn should be a call to the list-items endpoint
-  const {data: listItems} = useQuery({
-    queryKey: 'list-items',
-    queryFn: () =>
-      client('list-items', {token: user.token}).then(data => data.listItems),
-  })
-
-  // 🐨 assign listItem to the list item that has the same bookId as the book.id
-  const listItem = listItems?.find(item => item.bookId === book.id) ?? null
+  const listItem = useListItem()
 
   const id = `book-row-book-${book.id}`
 
