@@ -17,6 +17,7 @@ import {client} from 'utils/api-client.exercise'
 import {useAsync} from 'utils/hooks'
 import * as colors from 'styles/colors'
 import {CircleButton, Spinner} from './lib'
+import {useBook} from 'utils/books.exercise'
 
 function TooltipButton({label, highlight, onClick, icon, ...rest}) {
   const {isLoading, isError, error, run} = useAsync()
