@@ -1,12 +1,19 @@
 import {useQuery} from 'react-query'
-import {client} from './api-client.exercise'
+import {client} from './api-client'
 
-export const useListItem = (bookId, user) => {
+function useListItems(user) {
   const {data: listItems} = useQuery({
     queryKey: 'list-items',
     queryFn: () =>
       client('list-items', {token: user.token}).then(data => data.listItems),
   })
 
-  return listItems?.find(item => item.bookId === bookId) ?? null
+  return listItems ?? []
 }
+
+function useListItem(bookId, user) {
+  const listItems = useListItems(user)
+  return listItems.find(item => item.bookId === bookId) ?? null
+}
+
+export {useListItems, useListItem}

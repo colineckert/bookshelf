@@ -6,11 +6,12 @@ import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import {StatusButtons} from './status-buttons'
 import {Rating} from './rating'
-import {useListItem} from 'utils/list-items.exercise'
+import {useListItem} from 'utils/list-items'
 
 function BookRow({user, book}) {
   const {title, author, coverImageUrl} = book
-  const listItem = useListItem()
+
+  const listItem = useListItem(book.id, user)
 
   const id = `book-row-book-${book.id}`
 

@@ -2,10 +2,8 @@
 import {jsx} from '@emotion/core'
 
 import * as React from 'react'
-// 🐨 you'll need useMutation and queryCache from react-query
 import {useMutation, queryCache} from 'react-query'
-// 🐨 you'll also need the client from utils/api-client
-import {client} from 'utils/api-client.exercise'
+import {client} from 'utils/api-client'
 import {FaStar} from 'react-icons/fa'
 import * as colors from 'styles/colors'
 

@@ -1,5 +1,5 @@
 import {useQuery} from 'react-query'
-import {client} from './api-client.exercise'
+import {client} from './api-client'
 import bookPlaceholderSvg from 'assets/book-placeholder.svg'
 
 const loadingBook = {
