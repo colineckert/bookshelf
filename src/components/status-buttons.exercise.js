@@ -15,7 +15,7 @@ import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
 import * as colors from 'styles/colors'
 import {CircleButton, Spinner} from './lib'
-import {useListItem} from 'utils/list-items'
+import {useListItem, useUpdateListItem} from 'utils/list-items'
 
 function TooltipButton({label, highlight, onClick, icon, ...rest}) {
   const {isLoading, isError, error, run} = useAsync()
@@ -50,28 +50,8 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 
 function StatusButtons({user, book}) {
   const listItem = useListItem(book.id, user)
+  const [update] = useUpdateListItem(user)
 
-  // 💰 for all the mutations below, if you want to get the list-items cache
-  // updated after this query finishes then use the `onSettled` config option
-  // to queryCache.invalidateQueries('list-items')
-
-  // 🐨 call useMutation here and assign the mutate function to "update"
-  // the mutate function should call the list-items/:listItemId endpoint with a PUT
-  //   and the updates as data. The mutate function will be called with the updates
-  //   you can pass as data.
-  const [update] = useMutation(
-    updates => {
-      client(`list-items/${updates.id}`, {
-        data: updates,
-        token: user.token,
-        method: 'PUT',
-      })
-    },
-    {onSettled: () => queryCache.invalidateQueries('list-items')},
-  )
-
-  // 🐨 call useMutation here and assign the mutate function to "remove"
-  // the mutate function should call the list-items/:listItemId endpoint with a DELETE
   const [remove] = useMutation(
     ({id}) => {
       client(`list-items/${id}`, {

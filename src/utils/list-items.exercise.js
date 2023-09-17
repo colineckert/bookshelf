@@ -1,4 +1,4 @@
-import {useQuery} from 'react-query'
+import {useQuery, useMutation, queryCache} from 'react-query'
 import {client} from './api-client'
 
 function useListItems(user) {
@@ -16,4 +16,17 @@ function useListItem(bookId, user) {
   return listItems.find(item => item.bookId === bookId) ?? null
 }
 
-export {useListItems, useListItem}
+function useUpdateListItem(user) {
+  return useMutation(
+    updates => {
+      client(`list-items/${updates.id}`, {
+        data: updates,
+        token: user.token,
+        method: 'PUT',
+      })
+    },
+    {onSettled: () => queryCache.invalidateQueries('list-items')},
+  )
+}
+
+export {useListItems, useListItem, useUpdateListItem}
