@@ -11,7 +11,7 @@ function useListItems(user) {
   return listItems ?? []
 }
 
-function useListItem(bookId, user) {
+function useListItem(user, bookId) {
   const listItems = useListItems(user)
   return listItems.find(item => item.bookId === bookId) ?? null
 }
@@ -20,29 +20,35 @@ const defaultMutationOptions = {
   onSettled: () => queryCache.invalidateQueries('list-items'),
 }
 
-function useUpdateListItem(user) {
-  return useMutation(updates => {
-    client(`list-items/${updates.id}`, {
-      data: updates,
-      token: user.token,
-      method: 'PUT',
-    })
-  }, defaultMutationOptions)
+function useUpdateListItem(user, options) {
+  return useMutation(
+    updates => {
+      client(`list-items/${updates.id}`, {
+        data: updates,
+        token: user.token,
+        method: 'PUT',
+      })
+    },
+    {...defaultMutationOptions, ...options},
+  )
 }
 
-function useRemoveListItem(user) {
-  return useMutation(({id}) => {
-    client(`list-items/${id}`, {
-      token: user.token,
-      method: 'DELETE',
-    })
-  }, defaultMutationOptions)
+function useRemoveListItem(user, options) {
+  return useMutation(
+    ({id}) => {
+      client(`list-items/${id}`, {
+        token: user.token,
+        method: 'DELETE',
+      })
+    },
+    {...defaultMutationOptions, ...options},
+  )
 }
 
-function useCreateListItem(user) {
+function useCreateListItem(user, options) {
   return useMutation(
     ({bookId}) => client('list-items', {data: {bookId}, token: user.token}),
-    defaultMutationOptions,
+    {...defaultMutationOptions, ...options},
   )
 }
 
