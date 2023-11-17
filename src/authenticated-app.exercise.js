@@ -6,9 +6,7 @@ import {ErrorBoundary} from 'react-error-boundary'
 import {Button, ErrorMessage, FullPageErrorFallback} from './components/lib'
 import * as mq from './styles/media-queries'
 import * as colors from './styles/colors'
-import * as React from 'react'
-// 🐨 get AuthContext from ./context/auth-context
-import {AuthContext} from 'context/auth-context.exercise'
+import {useAuth} from 'context/auth-context.exercise'
 import {ReadingListScreen} from './screens/reading-list'
 import {FinishedScreen} from './screens/finished'
 import {DiscoverBooksScreen} from './screens/discover'
@@ -34,7 +32,7 @@ function ErrorFallback({error}) {
 // 💣 remove the props
 function AuthenticatedApp() {
   // 🐨 get user and logout function from AuthContext using useContext
-  const {user, logout} = React.useContext(AuthContext)
+  const {user, logout} = useAuth()
   return (
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <div
