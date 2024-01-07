@@ -22,6 +22,8 @@ async function getUser() {
 const AuthContext = React.createContext()
 AuthContext.displayName = 'AuthContext'
 
+const userPromise = getUser()
+
 function AuthProvider(props) {
   const {
     data: user,
@@ -43,7 +45,6 @@ function AuthProvider(props) {
     // have to wait until the app mounts before we kick off
     // the request.
     // We're moving from "Fetch on render" to "Render WHILE you fetch"!
-    const userPromise = getUser()
     run(userPromise)
   }, [run])
 
