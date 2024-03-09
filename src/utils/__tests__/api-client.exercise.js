@@ -1,3 +1,5 @@
+import {queryCache} from 'react-query'
+import * as auth from 'auth-provider'
 // 🐨 you'll need the test server
 // 💰 the way that our tests are set up, you'll find this in `src/test/server/test-server.js`
 import {server, rest} from 'test/server'
@@ -7,13 +9,8 @@ import {client} from '../api-client'
 const apiURL = process.env.REACT_APP_API_URL
 const endpoint = 'test-endpoint'
 
-// 🐨 add a beforeAll to start the server with `server.listen()`
-beforeAll(() => server.listen())
-// 🐨 add an afterAll to stop the server when `server.close()`
-afterAll(() => server.close())
-// 🐨 afterEach test, reset the server handlers to their original handlers
-// via `server.resetHandlers()`
-afterEach(() => server.resetHandlers())
+jest.mock('react-query')
+jest.mock('auth-provider')
 
 // 🐨 flesh these out:
 
@@ -99,4 +96,28 @@ test('when data is provided, it is stringified and the method defaults to POST',
   await client(endpoint, {data})
   // 🐨 verify the request.body is equal to the mock data object you passed
   expect(request.body).toEqual(data)
+})
+
+test('automatically logs the user out if a request returns a 401', async () => {
+  server.use(
+    rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
+      return res(ctx.status(401), ctx.json({message: 'Unauthorized'}))
+    }),
+  )
+  const result = await client(endpoint).catch(e => e)
+
+  expect(result.message).toMatchInlineSnapshot(`"Please re-authenticate."`)
+  expect(queryCache.clear).toHaveBeenCalledTimes(1)
+  expect(auth.logout).toHaveBeenCalledTimes(1)
+})
+
+test('automatically rejects the promise if theres is an error', async () => {
+  const testError = {message: 'Test Error'}
+  server.use(
+    rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
+      return res(ctx.status(400), ctx.json(testError))
+    }),
+  )
+
+  await expect(client(endpoint)).rejects.toEqual(testError)
 })
